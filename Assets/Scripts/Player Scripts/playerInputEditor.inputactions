@@ -13,6 +13,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "jetpackThrust",
+                    "type": "Value",
+                    "id": "eeba9dd8-c8c1-4ba7-8519-23f2aab985a5",
+                    "expectedControlType": "Double",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "jetPackCharge",
+                    "type": "Value",
+                    "id": "a9afa3e7-da90-4303-8c1b-d888dd68ab35",
+                    "expectedControlType": "Double",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -70,6 +88,28 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "608454c9-d9e0-4566-8691-59d5a9b96bcb",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "jetpackThrust",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "806a4ae5-5596-427a-8a7f-884d3c139345",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "jetPackCharge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

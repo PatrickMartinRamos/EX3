@@ -7,17 +7,17 @@ public class playerManager : MonoBehaviour
 {
     public static playerManager Instance { get; private set; }
     [Header("Jetpack")]
-    [SerializeField] private float jetpackCharge = 100;
+    [SerializeField] private float jetpackChargeStrength = 100;
+    [SerializeField] private float _fuelDepleteRate  = .5f;
+    [SerializeField] private float _fuelRefileRate  = 5f;
     [SerializeField] private float jetpackFuel = 100;
-    [SerializeField] private float jetpackThrust;
-    private float chargeSpeed;
+    [SerializeField] private float jetpackThrust = 10f;
     private bool haveJetpack = false;
 
     [Range(0.1f, 1)]
-    private float chargeMultiplier;
+    [SerializeField] private float chargeMultiplier = 1f;
 
     [Header("Player")]
-    [SerializeField] private float playerMoveSpeed;
     [SerializeField] private float playerChargeStregth = 30;
     private bool onComputer = false;
     private bool isUsingJetpack = false;
@@ -39,10 +39,26 @@ public class playerManager : MonoBehaviour
     }
     #endregion
 
+    #region getters
     public float getJetpackCharge()
     {
-        float s = chargeMultiplier * jetpackCharge;
+        float s = chargeMultiplier * jetpackChargeStrength;
         return s;
+    }
+
+    public float getFuelDepleteRate()
+    {
+        return _fuelDepleteRate ;
+    }
+
+    public float getFuelRefileRate()
+    {
+        return _fuelRefileRate;
+    }
+
+    public float getFuel()
+    {
+        return jetpackFuel;
     }
 
     public float getPlayerChargeStrength()
@@ -51,9 +67,9 @@ public class playerManager : MonoBehaviour
         return s;
     }
 
-    public float getMoveSpeed()
+    public float getJetpackThrustForce()
     {
-        return playerMoveSpeed;
+        return jetpackThrust;
     }
 
     public bool getHaveJetpack()
@@ -70,9 +86,5 @@ public class playerManager : MonoBehaviour
     {
         return isUsingJetpack; //if ginagamit ung jetpack reduce ung jetpack fuel
     }
-    
-    public float getJetpackChargeSpeed()
-    {
-        return chargeSpeed; //if hindi ginagamit ung jetpack refill fuel, can only be charge if gronded
-    }
+    #endregion
 }

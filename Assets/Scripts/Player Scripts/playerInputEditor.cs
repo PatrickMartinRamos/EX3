@@ -35,6 +35,24 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""jetpackThrust"",
+                    ""type"": ""Value"",
+                    ""id"": ""eeba9dd8-c8c1-4ba7-8519-23f2aab985a5"",
+                    ""expectedControlType"": ""Double"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""jetPackCharge"",
+                    ""type"": ""Value"",
+                    ""id"": ""a9afa3e7-da90-4303-8c1b-d888dd68ab35"",
+                    ""expectedControlType"": ""Double"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -92,6 +110,28 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""608454c9-d9e0-4566-8691-59d5a9b96bcb"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""jetpackThrust"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""806a4ae5-5596-427a-8a7f-884d3c139345"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""jetPackCharge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -101,6 +141,8 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
         // _playerMovement
         m__playerMovement = asset.FindActionMap("_playerMovement", throwIfNotFound: true);
         m__playerMovement_Move = m__playerMovement.FindAction("Move", throwIfNotFound: true);
+        m__playerMovement_jetpackThrust = m__playerMovement.FindAction("jetpackThrust", throwIfNotFound: true);
+        m__playerMovement_jetPackCharge = m__playerMovement.FindAction("jetPackCharge", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -163,11 +205,15 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
     private readonly InputActionMap m__playerMovement;
     private List<I_playerMovementActions> m__playerMovementActionsCallbackInterfaces = new List<I_playerMovementActions>();
     private readonly InputAction m__playerMovement_Move;
+    private readonly InputAction m__playerMovement_jetpackThrust;
+    private readonly InputAction m__playerMovement_jetPackCharge;
     public struct _playerMovementActions
     {
         private @PlayerInputEditor m_Wrapper;
         public _playerMovementActions(@PlayerInputEditor wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m__playerMovement_Move;
+        public InputAction @jetpackThrust => m_Wrapper.m__playerMovement_jetpackThrust;
+        public InputAction @jetPackCharge => m_Wrapper.m__playerMovement_jetPackCharge;
         public InputActionMap Get() { return m_Wrapper.m__playerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -180,6 +226,12 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
+            @jetpackThrust.started += instance.OnJetpackThrust;
+            @jetpackThrust.performed += instance.OnJetpackThrust;
+            @jetpackThrust.canceled += instance.OnJetpackThrust;
+            @jetPackCharge.started += instance.OnJetPackCharge;
+            @jetPackCharge.performed += instance.OnJetPackCharge;
+            @jetPackCharge.canceled += instance.OnJetPackCharge;
         }
 
         private void UnregisterCallbacks(I_playerMovementActions instance)
@@ -187,6 +239,12 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
+            @jetpackThrust.started -= instance.OnJetpackThrust;
+            @jetpackThrust.performed -= instance.OnJetpackThrust;
+            @jetpackThrust.canceled -= instance.OnJetpackThrust;
+            @jetPackCharge.started -= instance.OnJetPackCharge;
+            @jetPackCharge.performed -= instance.OnJetPackCharge;
+            @jetPackCharge.canceled -= instance.OnJetPackCharge;
         }
 
         public void RemoveCallbacks(I_playerMovementActions instance)
@@ -207,5 +265,7 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
     public interface I_playerMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnJetpackThrust(InputAction.CallbackContext context);
+        void OnJetPackCharge(InputAction.CallbackContext context);
     }
 }
