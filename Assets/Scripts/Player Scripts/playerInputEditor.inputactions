@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "jetPackCharge",
+                    "name": "playerCharge",
                     "type": "Value",
                     "id": "a9afa3e7-da90-4303-8c1b-d888dd68ab35",
                     "expectedControlType": "Double",
@@ -107,7 +107,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "jetPackCharge",
+                    "action": "playerCharge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

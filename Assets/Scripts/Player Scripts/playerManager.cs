@@ -7,15 +7,14 @@ public class playerManager : MonoBehaviour
 {
     public static playerManager Instance { get; private set; }
     [Header("Jetpack")]
-    [SerializeField] private float jetpackChargeStrength = 100;
+    [SerializeField] private float jetpackChargeStrength = 100;//not implemented
     [SerializeField] private float _fuelDepleteRate  = .5f;
     [SerializeField] private float _fuelRefileRate  = 5f;
     [SerializeField] private float jetpackFuel = 100;
     [SerializeField] private float jetpackThrust = 10f;
-    private bool haveJetpack = false;
+    [SerializeField] private bool haveJetpack = false; //set to true for testing
 
-    [Range(0.1f, 1)]
-    [SerializeField] private float chargeMultiplier = 1f;
+    private float chargeMultiplier = 1f;
 
     [Header("Player")]
     [SerializeField] private float playerChargeStregth = 30;

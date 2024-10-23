@@ -46,7 +46,7 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""jetPackCharge"",
+                    ""name"": ""playerCharge"",
                     ""type"": ""Value"",
                     ""id"": ""a9afa3e7-da90-4303-8c1b-d888dd68ab35"",
                     ""expectedControlType"": ""Double"",
@@ -129,7 +129,7 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""jetPackCharge"",
+                    ""action"": ""playerCharge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -142,7 +142,7 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
         m__playerMovement = asset.FindActionMap("_playerMovement", throwIfNotFound: true);
         m__playerMovement_Move = m__playerMovement.FindAction("Move", throwIfNotFound: true);
         m__playerMovement_jetpackThrust = m__playerMovement.FindAction("jetpackThrust", throwIfNotFound: true);
-        m__playerMovement_jetPackCharge = m__playerMovement.FindAction("jetPackCharge", throwIfNotFound: true);
+        m__playerMovement_playerCharge = m__playerMovement.FindAction("playerCharge", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -206,14 +206,14 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
     private List<I_playerMovementActions> m__playerMovementActionsCallbackInterfaces = new List<I_playerMovementActions>();
     private readonly InputAction m__playerMovement_Move;
     private readonly InputAction m__playerMovement_jetpackThrust;
-    private readonly InputAction m__playerMovement_jetPackCharge;
+    private readonly InputAction m__playerMovement_playerCharge;
     public struct _playerMovementActions
     {
         private @PlayerInputEditor m_Wrapper;
         public _playerMovementActions(@PlayerInputEditor wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m__playerMovement_Move;
         public InputAction @jetpackThrust => m_Wrapper.m__playerMovement_jetpackThrust;
-        public InputAction @jetPackCharge => m_Wrapper.m__playerMovement_jetPackCharge;
+        public InputAction @playerCharge => m_Wrapper.m__playerMovement_playerCharge;
         public InputActionMap Get() { return m_Wrapper.m__playerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -229,9 +229,9 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
             @jetpackThrust.started += instance.OnJetpackThrust;
             @jetpackThrust.performed += instance.OnJetpackThrust;
             @jetpackThrust.canceled += instance.OnJetpackThrust;
-            @jetPackCharge.started += instance.OnJetPackCharge;
-            @jetPackCharge.performed += instance.OnJetPackCharge;
-            @jetPackCharge.canceled += instance.OnJetPackCharge;
+            @playerCharge.started += instance.OnPlayerCharge;
+            @playerCharge.performed += instance.OnPlayerCharge;
+            @playerCharge.canceled += instance.OnPlayerCharge;
         }
 
         private void UnregisterCallbacks(I_playerMovementActions instance)
@@ -242,9 +242,9 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
             @jetpackThrust.started -= instance.OnJetpackThrust;
             @jetpackThrust.performed -= instance.OnJetpackThrust;
             @jetpackThrust.canceled -= instance.OnJetpackThrust;
-            @jetPackCharge.started -= instance.OnJetPackCharge;
-            @jetPackCharge.performed -= instance.OnJetPackCharge;
-            @jetPackCharge.canceled -= instance.OnJetPackCharge;
+            @playerCharge.started -= instance.OnPlayerCharge;
+            @playerCharge.performed -= instance.OnPlayerCharge;
+            @playerCharge.canceled -= instance.OnPlayerCharge;
         }
 
         public void RemoveCallbacks(I_playerMovementActions instance)
@@ -266,6 +266,6 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJetpackThrust(InputAction.CallbackContext context);
-        void OnJetPackCharge(InputAction.CallbackContext context);
+        void OnPlayerCharge(InputAction.CallbackContext context);
     }
 }
