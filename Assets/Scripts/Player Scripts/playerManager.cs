@@ -18,7 +18,6 @@ public class playerManager : MonoBehaviour
 
     [Header("Player")]
     [SerializeField] private float playerChargeStregth = 30;
-    private bool onComputer = false;
     private bool isUsingJetpack = false;
 
     #region
@@ -74,11 +73,6 @@ public class playerManager : MonoBehaviour
     public bool getHaveJetpack()
     {
         return haveJetpack;
-    }
-
-    public bool getOnComputerStatus()
-    {
-        return onComputer;
     }
 
     public bool getIsUsingJetpackStatus()

@@ -5,6 +5,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+/// <Note>
+/// Note: make sure box is layered as mask `
+/// </Note>
+
 public class playerScript : MonoBehaviour
 {
     private Rigidbody2D rb;
@@ -31,6 +35,9 @@ public class playerScript : MonoBehaviour
     private bool stopMoveWhenChargingDash = false;
     private bool usingDash = false;
 
+    private bool isClimbing = false;  // Flag to check if player is climbing
+    private float climbingSpeed = 5f;
+
     private float timer;
     private float sliderTimer;
     //[SerializeField] private LayerMask groundMask;
@@ -50,6 +57,15 @@ public class playerScript : MonoBehaviour
     [Header("Reference")]
     [SerializeField] PlayerInput _inputs;
     InputActionMap _playerInputEditor;
+
+    [Header("Camera")]
+    [SerializeField] private Camera cam;
+    [SerializeField] private float camXoffset;
+    [SerializeField] private float camYoffset;
+    [SerializeField] private float minX = -7f;
+    [SerializeField] private float maxX = 7f;  
+    [SerializeField] private float minY = 2f; 
+    [SerializeField] private float maxY = 3f;
     #region get input
     private void Awake()
     {
@@ -57,6 +73,10 @@ public class playerScript : MonoBehaviour
         _playerInputEditor = _inputs.actions.FindActionMap("_playerMovement");
         _playerInputEditor.FindAction("Move").performed += onMovedPeformed;
         _playerInputEditor.FindAction("Move").canceled += onMovedCancelled;
+
+        _playerInputEditor.FindAction("Climb").performed += onClimbPeformed;
+        _playerInputEditor.FindAction("Climb").canceled += onClimbCancelled;
+
 
         _playerInputEditor.FindAction("jetpackThrust").started += onPlayerJetpackPerformed;
         _playerInputEditor.FindAction("jetpackThrust").canceled += onPlayerJetpackCancelled;
@@ -81,8 +101,9 @@ public class playerScript : MonoBehaviour
     {
         timer = 0f;
         sliderTimer = 0f;
-        fuelSlider.maxValue = 100; // Set the maximum value of the slider
+        fuelSlider.maxValue = 100; 
         fuelSlider.value = _jetpackFuel;
+        fuelSlider.gameObject.SetActive(false);
         chargeSlider.gameObject.SetActive(false);
         _currentvelocity = Vector2.zero;
 
@@ -102,15 +123,26 @@ public class playerScript : MonoBehaviour
     private void FixedUpdate()
     {
         movePlayer();
-
         ApplyCharge();
     }
 
     private void Update()
     {
+        climbLadder();
         useJetpack();
         playerChargeSliderVisual();
         chargeSlider.transform.position = new Vector2(transform.position.x, transform.position.y + 1.5f);
+        chargeSlider.transform.position = new Vector2(transform.position.x, transform.position.y + 1.5f);
+
+        // Calculate the new camera position
+        Vector3 newCamPosition = new Vector3(transform.position.x + camXoffset, transform.position.y + camYoffset, -10f);
+
+        // Clamp the camera position
+        newCamPosition.x = Mathf.Clamp(newCamPosition.x, minX, maxX);
+        newCamPosition.y = Mathf.Clamp(newCamPosition.y, minY, maxY);
+
+        // Update camera position
+        cam.transform.position = newCamPosition;
     }
 
     #region move player
@@ -145,6 +177,40 @@ public class playerScript : MonoBehaviour
             rb.velocity = _currentvelocity;
         }
     }
+    #endregion
+
+    #region climb ladder
+    void onClimbPeformed(InputAction.CallbackContext ctx)
+    {
+        _inputVector = ctx.ReadValue<Vector2>();
+        _inputVector.x = 0f;
+    }
+    private void onClimbCancelled(InputAction.CallbackContext ctx) => _inputVector = Vector2.zero;
+
+    void climbLadder()
+    {
+        var s = GetComponent<BoxCollider2D>();
+        if (isClimbing)
+        {         
+            s.isTrigger = true;
+            float climbInput = _inputVector.y;
+            rb.gravityScale = 0f;
+            if (climbInput != 0)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, climbInput * climbingSpeed);
+            }
+            else
+            {
+                rb.velocity = new Vector2(rb.velocity.x, 0);
+            }
+        }
+        else
+        {
+            rb.gravityScale = 1f;
+            s.isTrigger = false;
+        }
+    }
+
     #endregion
 
     #region jetpack logic
@@ -207,10 +273,10 @@ public class playerScript : MonoBehaviour
         }
         if (collision.gameObject.layer == boxLayer)
         {
-            var colRB = collision.gameObject.GetComponent<Rigidbody2D>();
+            Rigidbody2D colRB = collision.gameObject.GetComponent<Rigidbody2D>();
             if(usingDash)
             {
-                colRB.bodyType = RigidbodyType2D.Dynamic;
+                colRB.bodyType = RigidbodyType2D.Dynamic;;
             }
             else
             {
@@ -225,7 +291,21 @@ public class playerScript : MonoBehaviour
         if (collision.gameObject.CompareTag("jetpack"))
         {
             _haveJetpack = true;
+            fuelSlider.gameObject.SetActive(true);
             collision.gameObject.SetActive(false);
+        }
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ladder"))
+        {
+            isClimbing = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ladder"))
+        {
+            isClimbing = false; 
         }
     }
 

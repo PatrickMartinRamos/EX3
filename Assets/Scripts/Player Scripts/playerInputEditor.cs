@@ -53,6 +53,15 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Climb"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""7068fc87-8d55-4d14-9453-c3029e028afd"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -66,28 +75,6 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""5fd61336-d8d6-4f7d-8f03-0255148b5ba0"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""b0c8f977-115f-488e-96d9-7ff6b38c93ac"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""left"",
@@ -132,6 +119,39 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
                     ""action"": ""playerCharge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""55b7dd07-3cf5-43e9-8ef8-76fbd3fe1413"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Climb"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""7b151a6d-ebbe-478f-887b-ece53ee5c486"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Climb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""cacccc96-3435-4b3a-8fbe-73358282a79b"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Climb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -143,6 +163,7 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
         m__playerMovement_Move = m__playerMovement.FindAction("Move", throwIfNotFound: true);
         m__playerMovement_jetpackThrust = m__playerMovement.FindAction("jetpackThrust", throwIfNotFound: true);
         m__playerMovement_playerCharge = m__playerMovement.FindAction("playerCharge", throwIfNotFound: true);
+        m__playerMovement_Climb = m__playerMovement.FindAction("Climb", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,6 +228,7 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
     private readonly InputAction m__playerMovement_Move;
     private readonly InputAction m__playerMovement_jetpackThrust;
     private readonly InputAction m__playerMovement_playerCharge;
+    private readonly InputAction m__playerMovement_Climb;
     public struct _playerMovementActions
     {
         private @PlayerInputEditor m_Wrapper;
@@ -214,6 +236,7 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m__playerMovement_Move;
         public InputAction @jetpackThrust => m_Wrapper.m__playerMovement_jetpackThrust;
         public InputAction @playerCharge => m_Wrapper.m__playerMovement_playerCharge;
+        public InputAction @Climb => m_Wrapper.m__playerMovement_Climb;
         public InputActionMap Get() { return m_Wrapper.m__playerMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -232,6 +255,9 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
             @playerCharge.started += instance.OnPlayerCharge;
             @playerCharge.performed += instance.OnPlayerCharge;
             @playerCharge.canceled += instance.OnPlayerCharge;
+            @Climb.started += instance.OnClimb;
+            @Climb.performed += instance.OnClimb;
+            @Climb.canceled += instance.OnClimb;
         }
 
         private void UnregisterCallbacks(I_playerMovementActions instance)
@@ -245,6 +271,9 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
             @playerCharge.started -= instance.OnPlayerCharge;
             @playerCharge.performed -= instance.OnPlayerCharge;
             @playerCharge.canceled -= instance.OnPlayerCharge;
+            @Climb.started -= instance.OnClimb;
+            @Climb.performed -= instance.OnClimb;
+            @Climb.canceled -= instance.OnClimb;
         }
 
         public void RemoveCallbacks(I_playerMovementActions instance)
@@ -267,5 +296,6 @@ public partial class @PlayerInputEditor: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJetpackThrust(InputAction.CallbackContext context);
         void OnPlayerCharge(InputAction.CallbackContext context);
+        void OnClimb(InputAction.CallbackContext context);
     }
 }

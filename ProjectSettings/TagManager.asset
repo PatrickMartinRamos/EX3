@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - jetpack
+  - Undefined
+  - lvl 1comp
+  - Box
   layers:
   - Default
   - TransparentFX
@@ -14,7 +17,7 @@ TagManager:
   - UI
   - Ground
   - Box
-  - 
+  - Ladder
   - 
   - 
   - 
