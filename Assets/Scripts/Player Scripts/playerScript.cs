@@ -58,14 +58,14 @@ public class playerScript : MonoBehaviour
     [SerializeField] PlayerInput _inputs;
     InputActionMap _playerInputEditor;
 
-    [Header("Camera")]
-    [SerializeField] private Camera cam;
-    [SerializeField] private float camXoffset;
-    [SerializeField] private float camYoffset;
-    [SerializeField] private float minX = -7f;
-    [SerializeField] private float maxX = 7f;  
-    [SerializeField] private float minY = 2f; 
-    [SerializeField] private float maxY = 3f;
+    //[Header("Camera")]
+    //[SerializeField] private Camera cam;
+    //[SerializeField] private float camXoffset;
+    //[SerializeField] private float camYoffset;
+    //[SerializeField] private float minX = -7f;
+    //[SerializeField] private float maxX = 7f;  
+    //[SerializeField] private float minY = 2f; 
+    //[SerializeField] private float maxY = 3f;
     #region get input
     private void Awake()
     {
@@ -134,16 +134,16 @@ public class playerScript : MonoBehaviour
         chargeSlider.transform.position = new Vector2(transform.position.x, transform.position.y + 1.5f);
         chargeSlider.transform.position = new Vector2(transform.position.x, transform.position.y + 1.5f);
 
-        // Calculate the new camera position
-        Vector3 newCamPosition = new Vector3(transform.position.x + camXoffset, transform.position.y + camYoffset, -10f);
+        //// Calculate the new camera position
+        //Vector3 newCamPosition = new Vector3(transform.position.x + camXoffset, transform.position.y + camYoffset, -10f);
 
-        // Clamp the camera position
-        newCamPosition.x = Mathf.Clamp(newCamPosition.x, minX, maxX);
-        newCamPosition.y = Mathf.Clamp(newCamPosition.y, minY, maxY);
+        //// Clamp the camera position
+        //newCamPosition.x = Mathf.Clamp(newCamPosition.x, minX, maxX);
+        //newCamPosition.y = Mathf.Clamp(newCamPosition.y, minY, maxY);
 
-        // Update camera position
-        cam.transform.position = newCamPosition;
+        //cam.transform.position = newCamPosition;
     }
+
 
     #region move player
     void onMovedPeformed(InputAction.CallbackContext ctx)
@@ -274,17 +274,19 @@ public class playerScript : MonoBehaviour
         if (collision.gameObject.layer == boxLayer)
         {
             Rigidbody2D colRB = collision.gameObject.GetComponent<Rigidbody2D>();
-            if(usingDash)
+            if(usingDash && isGrounded)
             {
                 colRB.bodyType = RigidbodyType2D.Dynamic;;
             }
             else
             {
-                colRB.bodyType = RigidbodyType2D.Static;
+                colRB.bodyType = RigidbodyType2D.Kinematic;
+                colRB.useFullKinematicContacts = true;
             }
 
         }
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -435,5 +437,4 @@ public class playerScript : MonoBehaviour
         //Debug.Log(sliderTimer);
     }
     #endregion
-
 }

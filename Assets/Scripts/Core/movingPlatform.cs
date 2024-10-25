@@ -5,10 +5,10 @@ using UnityEngine;
 public class movingPlatform : MonoBehaviour
 {
     public enum MovementType { Horizontal, Vertical }
-    public MovementType movementType = MovementType.Horizontal;
+    [SerializeField] private MovementType movementType = MovementType.Horizontal;
 
-    public float speed = 2f;
-    public float distance = 3f;
+    [SerializeField] private float speed = 2f;
+    [SerializeField] private float distance = 3f; //from org position to distance
 
     private Vector3 startPosition;
     private bool movingForward = true;
@@ -29,14 +29,18 @@ public class movingPlatform : MonoBehaviour
         float movement = Mathf.PingPong(Time.time * speed, distance);
 
         if (movingForward)
+        {
             transform.position = startPosition + direction * movement;
+        }
         else
+        {
             transform.position = startPosition - direction * movement;
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // When the player or box lands on the platform, make it a child
+        // When the player or box lands on the platform make it a child cuz the player and the box is humping when platform is going down
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Box"))
         {
             collision.transform.SetParent(transform);
