@@ -40,7 +40,6 @@ public class movingPlatform : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // When the player or box lands on the platform make it a child cuz the player and the box is humping when platform is going down
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Box"))
         {
             collision.transform.SetParent(transform);
@@ -49,10 +48,12 @@ public class movingPlatform : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        // When the player or box leaves the platform, unparent it
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Box"))
         {
-            collision.transform.SetParent(null);
+            if (gameObject.activeInHierarchy) // Check if the platform is still active
+            {
+                collision.transform.SetParent(null);
+            }
         }
     }
 }

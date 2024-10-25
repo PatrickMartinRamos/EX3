@@ -19,7 +19,7 @@ public class playerScript : MonoBehaviour
     [SerializeField] private float maxCharge = 100f;
     [SerializeField] private float accelerationDuration = .3f;
     private float _accelerate = 5f, deccelerate = 5f;
-    private float _durToMaxSpeed = 1.5f;
+    private float _durToMaxSpeed = 0.2f;
     private float _playerChargeStrength;
     private float _playerChargeInput;
     private float playerChargeRelease;
@@ -34,9 +34,9 @@ public class playerScript : MonoBehaviour
     private bool isAccelerating = false;
     private bool stopMoveWhenChargingDash = false;
     private bool usingDash = false;
-
-    private bool isClimbing = false;  // Flag to check if player is climbing
+    private bool isClimbing = false;
     private float climbingSpeed = 5f;
+    private Vector3 lastSavePlayerPos;
 
     private float timer;
     private float sliderTimer;
@@ -106,6 +106,7 @@ public class playerScript : MonoBehaviour
         fuelSlider.gameObject.SetActive(false);
         chargeSlider.gameObject.SetActive(false);
         _currentvelocity = Vector2.zero;
+        lastSavePlayerPos = transform.position;
 
         if (playerManager.Instance != null)
         {
@@ -124,6 +125,7 @@ public class playerScript : MonoBehaviour
     {
         movePlayer();
         ApplyCharge();
+        limitDownwardMovement();
     }
 
     private void Update()
@@ -143,7 +145,17 @@ public class playerScript : MonoBehaviour
 
         //cam.transform.position = newCamPosition;
     }
+    #region save player last Pos
+    public void setSavePos(Vector3 newSavePoint)
+    {
+        lastSavePlayerPos = newSavePoint;
+    }
 
+    public void resetToSavePos()
+    {
+        transform.position = lastSavePlayerPos;
+    }
+    #endregion
 
     #region move player
     void onMovedPeformed(InputAction.CallbackContext ctx)
@@ -177,6 +189,19 @@ public class playerScript : MonoBehaviour
             rb.velocity = _currentvelocity;
         }
     }
+
+    void limitDownwardMovement()
+    {
+        if (rb.velocity.y < 0)
+        {
+            // Reduce the horizontal movement while falling
+            Vector2 reducedVelocity = new Vector2(rb.velocity.x * 0.7f, rb.velocity.y); 
+            rb.velocity = reducedVelocity;
+        }
+    }
+
+
+
     #endregion
 
     #region climb ladder
@@ -330,6 +355,9 @@ public class playerScript : MonoBehaviour
         {
             _isChargingDash = true;
             stopMoveWhenChargingDash = true;
+
+            _currentCharge = 0f;
+            _reverseCharge = false;
         }
     }
 
@@ -352,8 +380,7 @@ public class playerScript : MonoBehaviour
 
             // Reset the charge slider
             chargeSlider.value = 0f;
-            // Debug log to check the released charge
-            Debug.Log("Charge released: " + playerChargeRelease);
+            //Debug.Log("Charge released: " + playerChargeRelease);
         }
     }
 
