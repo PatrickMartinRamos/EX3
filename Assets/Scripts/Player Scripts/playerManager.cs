@@ -11,7 +11,7 @@ public class playerManager : MonoBehaviour
     [SerializeField] private float _fuelDepleteRate  = .5f;
     [SerializeField] private float _fuelRefileRate  = 5f;
     [SerializeField] private float jetpackFuel = 100;
-    [SerializeField] private float jetpackThrust = 10f;
+    [SerializeField] private float jetpackThrust;
 
     private float chargeMultiplier = 1f;
 

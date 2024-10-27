@@ -6,13 +6,10 @@ public class levelManagerScript : MonoBehaviour
 {
     public static levelManagerScript Instance { get; private set; }
     public int CurrentLevel { get; private set; } = 1;
-
-    // Reference to the camera script
     [SerializeField] private cameraScript camScript;
 
     private void Awake()
     {
-        // Ensure there's only one instance of LevelManager
         if (Instance == null)
         {
             Instance = this;
@@ -29,7 +26,6 @@ public class levelManagerScript : MonoBehaviour
         CurrentLevel++;
         Debug.Log($"Changed to level {CurrentLevel}");
 
-        // Change the camera level
         if (camScript != null)
         {
             // Change camera level based on the current level
@@ -45,13 +41,9 @@ public class levelManagerScript : MonoBehaviour
                     camScript.changeLevel(cameraScript.Level.level_3);
                     break;
                 default:
-                    Debug.LogWarning("No camera settings defined for this level.");
+                    //Debug.LogWarning("No camera settings defined for this level.");
                     break;
             }
-        }
-        else
-        {
-            Debug.LogError("Camera script reference is missing!");
         }
     }
 }

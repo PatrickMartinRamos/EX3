@@ -8,6 +8,12 @@ TagManager:
   - Undefined
   - lvl 1comp
   - Box
+  - hintTrigger_1
+  - hintTrigger_2
+  - hintTrigger_3
+  - storyTrigger_1
+  - storyTrigger_2
+  - storyTrigger_3
   layers:
   - Default
   - TransparentFX

@@ -57,6 +57,7 @@ public class playerScript : MonoBehaviour
     [Header("Reference")]
     [SerializeField] PlayerInput _inputs;
     InputActionMap _playerInputEditor;
+    private bool stopMovement = false;
 
     //[Header("Camera")]
     //[SerializeField] private Camera cam;
@@ -169,7 +170,7 @@ public class playerScript : MonoBehaviour
   
     void movePlayer()
     {
-        if (_inputVector.x != 0 && !stopMoveWhenChargingDash)
+        if (_inputVector.x != 0 && !stopMoveWhenChargingDash && !stopMovement)
         {
             timer += Time.deltaTime;
             timer = Mathf.Clamp(timer, 0, _durToMaxSpeed);
@@ -198,6 +199,10 @@ public class playerScript : MonoBehaviour
             Vector2 reducedVelocity = new Vector2(rb.velocity.x * 0.7f, rb.velocity.y); 
             rb.velocity = reducedVelocity;
         }
+    }
+    public void stopMove(bool stopMove)
+    {
+        stopMovement = stopMove;
     }
 
 
@@ -261,7 +266,7 @@ public class playerScript : MonoBehaviour
     void useJetpack()
     {
         // Fuel usage logic
-        if (_isUsingJetpack && _jetpackFuel > 0)
+        if (_isUsingJetpack && _jetpackFuel > 0 && !stopMovement)
         {
             _jetpackFuel -= _fuelDepleteRate * Time.deltaTime;
 

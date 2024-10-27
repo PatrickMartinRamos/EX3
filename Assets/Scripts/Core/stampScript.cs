@@ -7,14 +7,14 @@ public class stampScript : MonoBehaviour
     [System.Serializable]
     public class Stamp
     {
-        public GameObject stampObject;  // The stamp object
-        public float speed = 1f;        // Speed of movement
-        public float delay = 0f;        // Delay before the stamp starts moving
-        public float distance = 5f;     // Distance to move down before returning
-        [HideInInspector] public bool started = false;  // To track if the stamp started moving
-        [HideInInspector] public float timer = 0f;      // Timer to manage delay
-        [HideInInspector] public Vector3 startPosition; // Original position of the stamp
-        [HideInInspector] public bool movingDown = true; // Direction of movement
+        public GameObject stampObject;
+        public float speed = 1f;
+        public float delay = 0f;
+        public float distance = 5f; 
+        [HideInInspector] public bool started = false; 
+        [HideInInspector] public float timer = 0f;
+        [HideInInspector] public Vector3 startPosition;
+        [HideInInspector] public bool movingDown = true; 
         [HideInInspector] public BoxCollider2D stampCollider;
     }
 
