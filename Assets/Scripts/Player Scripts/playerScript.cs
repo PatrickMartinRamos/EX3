@@ -116,7 +116,7 @@ public class playerScript : MonoBehaviour
             _jetpackFuel = playerManager.Instance.getFuel();
             _jetpackThrustForce = playerManager.Instance.getJetpackThrustForce();
             _isUsingJetpack = playerManager.Instance.getIsUsingJetpackStatus();
-            _haveJetpack = playerManager.Instance.getHaveJetpack();
+            //_haveJetpack = playerManager.Instance.getHaveJetpack();
             //Debug.Log(_playerChargeStrength);
         }
     }

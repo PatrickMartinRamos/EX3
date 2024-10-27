@@ -12,7 +12,6 @@ public class playerManager : MonoBehaviour
     [SerializeField] private float _fuelRefileRate  = 5f;
     [SerializeField] private float jetpackFuel = 100;
     [SerializeField] private float jetpackThrust = 10f;
-    [SerializeField] private bool haveJetpack = false; //set to true for testing
 
     private float chargeMultiplier = 1f;
 
@@ -68,11 +67,6 @@ public class playerManager : MonoBehaviour
     public float getJetpackThrustForce()
     {
         return jetpackThrust;
-    }
-
-    public bool getHaveJetpack()
-    {
-        return haveJetpack;
     }
 
     public bool getIsUsingJetpackStatus()
