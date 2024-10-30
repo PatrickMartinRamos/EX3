@@ -4,6 +4,5 @@ using UnityEngine;
 
 public class connectTheColors : MonoBehaviour
 {
-
-
+    //not implemented
 }
