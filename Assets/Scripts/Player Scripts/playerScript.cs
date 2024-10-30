@@ -59,6 +59,13 @@ public class playerScript : MonoBehaviour
     InputActionMap _playerInputEditor;
     private bool stopMovement = false;
 
+    //track
+    private float jetpackActiveTime; // Time the jetpack has been active
+    private float maxJetpackHeight;  // Maximum height reached by the jetpack
+    private Vector2 dashStartPosition;
+    private float dashDistanceCovered;
+    [SerializeField] private TextMeshProUGUI trackJet;
+
     //[Header("Camera")]
     //[SerializeField] private Camera cam;
     //[SerializeField] private float camXoffset;
@@ -108,7 +115,7 @@ public class playerScript : MonoBehaviour
         chargeSlider.gameObject.SetActive(false);
         _currentvelocity = Vector2.zero;
         lastSavePlayerPos = transform.position;
-
+        Application.targetFrameRate = 60;
         if (playerManager.Instance != null)
         {
             _playerChargeStrength = playerManager.Instance.getPlayerChargeStrength();
@@ -127,24 +134,18 @@ public class playerScript : MonoBehaviour
         movePlayer();
         ApplyCharge();
         limitDownwardMovement();
+        useJetpack();
     }
 
     private void Update()
     {
         climbLadder();
-        useJetpack();
+        //useJetpack();
         playerChargeSliderVisual();
         chargeSlider.transform.position = new Vector2(transform.position.x, transform.position.y + 1.5f);
         chargeSlider.transform.position = new Vector2(transform.position.x, transform.position.y + 1.5f);
 
-        //// Calculate the new camera position
-        //Vector3 newCamPosition = new Vector3(transform.position.x + camXoffset, transform.position.y + camYoffset, -10f);
-
-        //// Clamp the camera position
-        //newCamPosition.x = Mathf.Clamp(newCamPosition.x, minX, maxX);
-        //newCamPosition.y = Mathf.Clamp(newCamPosition.y, minY, maxY);
-
-        //cam.transform.position = newCamPosition;
+        trackJet.text = "jetpack thrust " + _jetpackThrustForce;
     }
     #region save player last Pos
     public void setSavePos(Vector3 newSavePoint)
@@ -260,6 +261,7 @@ public class playerScript : MonoBehaviour
         if (_jetpackInput < 1 && _haveJetpack)
         {
             _isUsingJetpack = false;
+            jetpackActiveTime = 0f; // Reset active time
         }
     }
 
@@ -268,20 +270,31 @@ public class playerScript : MonoBehaviour
         // Fuel usage logic
         if (_isUsingJetpack && _jetpackFuel > 0 && !stopMovement)
         {
+
             _jetpackFuel -= _fuelDepleteRate * Time.deltaTime;
 
             if (_jetpackFuel > 0)
             {
                 rb.AddForce(new Vector2(0, _jetpackThrustForce), ForceMode2D.Force);
+
+                // Increment active time
+                jetpackActiveTime += Time.deltaTime;
+
+                // Calculate max height
+                //float mass = rb.mass;
+                //float acceleration = _jetpackThrustForce / mass;
+                //maxJetpackHeight = (0 * jetpackActiveTime) + (0.5f * acceleration * jetpackActiveTime * jetpackActiveTime); // Simplified
+                //Debug.Log("Heigth" + maxJetpackHeight);
+                //Debug.Log("Time " + jetpackActiveTime);
             }
             else
             {
                 // If fuel hits 0, stop using jetpack
                 _isUsingJetpack = false;
+                jetpackActiveTime = 0f;
             }
         }
 
-        // Refilling logic
         if (isGrounded && _jetpackFuel < 100) // Refill fuel only when grounded
         {
             _jetpackFuel += _fuelRefileRate * Time.deltaTime;
@@ -311,12 +324,12 @@ public class playerScript : MonoBehaviour
             else
             {
                 colRB.bodyType = RigidbodyType2D.Kinematic;
+                colRB.velocity = Vector2.zero;
                 colRB.useFullKinematicContacts = true;
             }
 
         }
     }
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -349,8 +362,17 @@ public class playerScript : MonoBehaviour
             isGrounded = false;
             //Debug.Log("left ground");
         }
+        //int boxLayer = LayerMask.NameToLayer("Box");
+        //if (collision.gameObject.layer == boxLayer)
+        //{
+        //    Rigidbody2D colRB = collision.gameObject.GetComponent<Rigidbody2D>();
+        //    colRB.bodyType = RigidbodyType2D.Kinematic;
+        //    colRB.useFullKinematicContacts = true;
+        //}
     }
     #endregion
+
+
 
     #region player charge logic
     public void onPlayerChargePerformed(InputAction.CallbackContext ctx)
@@ -376,12 +398,11 @@ public class playerScript : MonoBehaviour
             _reverseCharge = false;
             stopMoveWhenChargingDash = false;
 
-            float maxChargeStrength = _playerChargeStrength;
             // Calculate the percentage of charge (0 to 1)
             float chargePercentage = _currentCharge / maxCharge;
 
             // Calculate the final strength based on percentage of charge
-            playerChargeRelease = maxChargeStrength * chargePercentage;
+            playerChargeRelease = _playerChargeStrength * chargePercentage;
 
             // Reset the charge slider
             chargeSlider.value = 0f;
@@ -392,18 +413,20 @@ public class playerScript : MonoBehaviour
 
     void ApplyCharge()
     {
-        // Check for player charge release
         if (!_isChargingDash && playerChargeRelease > 0)
         {
             if (isGrounded)
             {
+                // Record the starting position at the beginning of the dash
+                dashStartPosition = rb.position;
+                dashDistanceCovered = 0f;
+
                 // Use the last movement direction for applying force
                 targetForce = _lastMovementDirection * playerChargeRelease;
 
-                // Start accelerating
                 isAccelerating = true;
-                accelerationTimer = 0f; // Reset the timer
-                Debug.Log("Starting acceleration with force: " + targetForce);
+                accelerationTimer = 0f;
+               // Debug.Log("Starting acceleration with force: " + targetForce);
             }
 
             playerChargeRelease = 0f;
@@ -414,12 +437,14 @@ public class playerScript : MonoBehaviour
         {
             accelerationTimer += Time.deltaTime; // Increment the timer
             usingDash = true;
+
             // Calculate the current acceleration
             float t = accelerationTimer / accelerationDuration;
             Vector2 currentForce = Vector2.Lerp(Vector2.zero, targetForce, t);
-
-            // Apply the current force to the Rigidbody2D
             rb.velocity = currentForce;
+            
+            dashDistanceCovered = Vector2.Distance(dashStartPosition, rb.position);
+            //Debug.Log("Dash Distance Covered: " + dashDistanceCovered);
 
             // Check if acceleration is complete
             if (t >= 1f)

@@ -7,16 +7,15 @@ public class playerManager : MonoBehaviour
 {
     public static playerManager Instance { get; private set; }
     [Header("Jetpack")]
-    [SerializeField] private float jetpackChargeStrength = 100;//not implemented
-    [SerializeField] private float _fuelDepleteRate  = .5f;
-    [SerializeField] private float _fuelRefileRate  = 5f;
-    [SerializeField] private float jetpackFuel = 100;
+    [SerializeField] private float _fuelDepleteRate;
+    [SerializeField] private float _fuelRefileRate;
+    [SerializeField] private float jetpackFuel;
     [SerializeField] private float jetpackThrust;
 
     private float chargeMultiplier = 1f;
 
     [Header("Player")]
-    [SerializeField] private float playerChargeStregth = 30;
+    [SerializeField] private float playerDashStregth = 30;
     private bool isUsingJetpack = false;
 
     #region
@@ -25,7 +24,7 @@ public class playerManager : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+           // DontDestroyOnLoad(gameObject);
            // Debug.Log("PlayerManager instance set");
 
         }
@@ -37,12 +36,6 @@ public class playerManager : MonoBehaviour
     #endregion
 
     #region getters
-    public float getJetpackCharge()
-    {
-        float s = chargeMultiplier * jetpackChargeStrength;
-        return s;
-    }
-
     public float getFuelDepleteRate()
     {
         return _fuelDepleteRate ;
@@ -60,7 +53,7 @@ public class playerManager : MonoBehaviour
 
     public float getPlayerChargeStrength()
     {
-        float s = chargeMultiplier * playerChargeStregth;
+        float s = chargeMultiplier * playerDashStregth;
         return s;
     }
 
