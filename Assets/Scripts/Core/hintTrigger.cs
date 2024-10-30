@@ -65,8 +65,8 @@ public class hintTrigger : MonoBehaviour
         hintText.transform.localScale = Vector3.zero;
         hintTextBG.transform.localScale = Vector3.zero;
 
-        hintText.transform.DOScale(new Vector3(0.12f, 0.12f, 0.12f), 0.3f).SetEase(Ease.OutBounce);
-        hintTextBG.transform.DOScale(new Vector3(5.8f, 5.8f, 0), 0.3f).SetEase(Ease.OutBounce);
+        hintText.transform.DOScale(new Vector3(0.1735439f, 0.1819156f, 0.12f), 0.3f).SetEase(Ease.OutBounce);
+        hintTextBG.transform.DOScale(new Vector3(9.240001f, 8.814776f, 0), 0.3f).SetEase(Ease.OutBounce);
     }
 
     private void OnTriggerExit2D(Collider2D collision)

@@ -372,8 +372,6 @@ public class playerScript : MonoBehaviour
     }
     #endregion
 
-
-
     #region player charge logic
     public void onPlayerChargePerformed(InputAction.CallbackContext ctx)
     {
