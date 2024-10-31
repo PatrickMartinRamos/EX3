@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d3e9ed8f0f75fa845b6f5bd1133bcd9d
+guid: 606a6c0c33974d248a71b76c6e1afa2c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,22 +97,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BLOWER (2)_20241029_013313_0001_0
+      name: GROUND _ WALL_0
       rect:
         serializedVersion: 2
-        x: 471
-        y: 523
-        width: 773
-        height: 611
+        x: 147
+        y: 278
+        width: 1119
+        height: 208
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 2}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ea23175da3655cc45a24b92c375923c0
-      internalID: -1470843018
+      spriteID: 18f15cad82678b342a71d178e4b90354
+      internalID: 1365550121
       vertices: []
       indices: 
       edges: []
@@ -128,7 +128,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      BLOWER (2)_20241029_013313_0001_0: -1470843018
+      GROUND _ WALL_0: 1365550121
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

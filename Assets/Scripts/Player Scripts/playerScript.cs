@@ -220,9 +220,11 @@ public class playerScript : MonoBehaviour
 
     void climbLadder()
     {
-        var s = GetComponent<BoxCollider2D>();
+        var b = GetComponent<BoxCollider2D>();
+        var s = GetComponent<CircleCollider2D>();
         if (isClimbing)
         {         
+            b.isTrigger = true;
             s.isTrigger = true;
             float climbInput = _inputVector.y;
             rb.gravityScale = 0f;
@@ -238,6 +240,7 @@ public class playerScript : MonoBehaviour
         else
         {
             rb.gravityScale = 1f;
+            b.isTrigger = false;
             s.isTrigger = false;
         }
     }

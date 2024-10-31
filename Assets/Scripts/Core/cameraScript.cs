@@ -7,6 +7,7 @@ public class cameraScript : MonoBehaviour
 
     [Header("Camera")]
     [SerializeField] private Camera cam;
+    [SerializeField] private Transform vCam_1;
     [SerializeField] private Transform playerTransform;
     public Level currentLevel; // make this public so it can be change on level change adjust camera
 
@@ -50,6 +51,7 @@ public class cameraScript : MonoBehaviour
         newCamPosition.y = Mathf.Clamp(newCamPosition.y, activeSettings.minY, activeSettings.maxY);
 
         cam.transform.position = newCamPosition;
+        vCam_1.transform.position = newCamPosition;
         ApplyCameraSettings();
     }
 

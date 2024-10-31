@@ -14,6 +14,9 @@ TagManager:
   - storyTrigger_1
   - storyTrigger_2
   - storyTrigger_3
+  - BigBox
+  - Trash
+  - PressurePlate
   layers:
   - Default
   - TransparentFX

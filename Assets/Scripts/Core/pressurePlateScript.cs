@@ -16,6 +16,11 @@ public class pressurePlateScript : MonoBehaviour
             onPressurePlateActivate?.Invoke();
             StartCoroutine(DeactivateBoxAfterDelay(collision.gameObject));
         }
+        else if(collision.gameObject.CompareTag("BigBox"))
+        {
+            onPressurePlateActivate?.Invoke();
+            StartCoroutine(DeactivateBoxAfterDelay(collision.gameObject));
+        }
     }
 
     private IEnumerator DeactivateBoxAfterDelay(GameObject box)

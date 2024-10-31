@@ -26,6 +26,10 @@ public class boxScript : MonoBehaviour
                 rb.velocity = Vector2.zero; // Reset velocity
             }
         }
+        if(collision.gameObject.CompareTag("Trash"))
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
