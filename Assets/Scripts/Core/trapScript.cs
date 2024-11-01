@@ -22,6 +22,9 @@ public class trapScript : MonoBehaviour
             playerScript playerScript = collision.gameObject.GetComponent<playerScript>();
             playerScript.resetToSavePos();
 
+
+            //when story is trigger it disable the collider of that trigger when the player die
+            //the collider get enabled again
             foreach (storyTrigger trigger in storyTriggers)
             {
                 trigger.activateTriggerColliderOnReset(true);

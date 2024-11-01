@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class cameraEventScript : MonoBehaviour
 {
+    /// <summary>
+    /// note: set the vCam_1-Main camera as 0
+    /// set the duration of the vCam_1-Main camera to 0
+    /// </summary>
+
+    [System.Serializable]
+    public class CameraEvent
+    {
+        public GameObject camera; 
+        public float duration;    
+    }
+
     public static cameraEventScript Instance;
 
     // Note: Set vCam_1-Main Cam as index 0 in each list.
     [Header("Level 1 Cam Events")]
-    [SerializeField] private List<GameObject> lvl1_VCams;
+    [SerializeField] private List<CameraEvent> lvl1_VCams;
     [Header("Level 2 Cam Events")]
-    [SerializeField] private List<GameObject> lvl2_VCams;
+    [SerializeField] private List<CameraEvent> lvl2_VCams;
     [Header("Level 3 Cam Events")]
-    [SerializeField] private List<GameObject> lvl3_VCams;
+    [SerializeField] private List<CameraEvent> lvl3_VCams;
 
     private void Start()
     {
@@ -24,48 +36,50 @@ public class cameraEventScript : MonoBehaviour
         SetMainCamera(lvl3_VCams);
     }
 
-    private void SetMainCamera(List<GameObject> camList)
+    private void SetMainCamera(List<CameraEvent> camList)
     {
         for (int i = 0; i < camList.Count; i++)
         {
-            camList[i].SetActive(i == 0);  // Only activate the main camera (index 0)
+            camList[i].camera.SetActive(i == 0);  // Only activate the main camera (index 0)
         }
     }
+
+    #region Level 1 Cam Events
+    public void onLevelOneGreenGateOpenEvent()
+    {
+        int[] cameraIndices = { 1 };
+        StartCoroutine(ActivateEventCameras(lvl1_VCams,cameraIndices));
+    }
+    #endregion
 
     #region Level 2 Cam Events 
     // Level 2 events
     public void onWindBlowFinishEvent()
     {
-        int[] cameraIndices = { 1, 2 }; // Example: activate cameras 1 and 2
-        float[] durations = { 3f, 3f }; // Duration for each camera
-        StartCoroutine(ActivateEventCameras(lvl2_VCams, cameraIndices, durations));
+        int[] cameraIndices = { 1, 2 }; // Activate cameras 1 and 2
+        StartCoroutine(ActivateEventCameras(lvl2_VCams, cameraIndices));
     }
     #endregion
 
-    private IEnumerator ActivateEventCameras(List<GameObject> camList, int[] cameraIndices, float[] durations)
+    private IEnumerator ActivateEventCameras(List<CameraEvent> camList, int[] cameraIndices)
     {
-        // Ensure the camera indices and durations arrays are of the same length
-        if (cameraIndices.Length != durations.Length)
-        {
-            Debug.LogError("Camera indices and durations arrays must be of the same length.");
-            yield break;
-        }
-
         // Activate the cameras in sequence
         for (int i = 0; i < cameraIndices.Length; i++)
         {
+            int camIndex = cameraIndices[i];
+
             // Activate the current event camera
-            camList[cameraIndices[i]].SetActive(true);
-            camList[0].SetActive(false);  // Deactivate main camera
+            camList[camIndex].camera.SetActive(true);
+            camList[0].camera.SetActive(false);  // Deactivate main camera
 
             // Wait for the specified duration
-            yield return new WaitForSeconds(durations[i]);
+            yield return new WaitForSeconds(camList[camIndex].duration);
 
             // Deactivate the current event camera before the next one
-            camList[cameraIndices[i]].SetActive(false);
+            camList[camIndex].camera.SetActive(false);
         }
 
         // Finally, reset back to the main camera
-        camList[0].SetActive(true);  // Reactivate main camera
+        camList[0].camera.SetActive(true);  // Reactivate main camera
     }
 }
