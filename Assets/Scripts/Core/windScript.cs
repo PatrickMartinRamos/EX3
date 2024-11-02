@@ -19,11 +19,15 @@ public class windScript : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        else if(collision.gameObject.CompareTag("Box"))
+        else if(collision.gameObject.CompareTag("dropBox"))
         {
             var getRb = collision.gameObject.GetComponent<Rigidbody2D>();
 
             getRb.AddForce(Vector2.right * 20,ForceMode2D.Impulse);
+            Destroy(gameObject);
+        }
+        else if(collision.gameObject.CompareTag("Wind"))
+        {
             Destroy(gameObject);
         }
     }
