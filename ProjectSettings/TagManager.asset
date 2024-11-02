@@ -23,6 +23,8 @@ TagManager:
   - hintTrigger_5
   - storyTrigger_6
   - storyTrigger_7
+  - dropBox
+  - Wind
   layers:
   - Default
   - TransparentFX

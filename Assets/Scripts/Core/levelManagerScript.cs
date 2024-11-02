@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class levelManagerScript : MonoBehaviour
 {
     public static levelManagerScript Instance { get; private set; }
-    public int CurrentLevel { get; private set; } = 1;
+    public int CurrentLevel { get;  set; } = 1;
     [SerializeField] private cameraScript camScript;
     [SerializeField] private List<GameObject> Levels;
     [SerializeField] private List<Transform> lvlStartPos;
@@ -17,7 +17,7 @@ public class levelManagerScript : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+           
         }
         else
         {
@@ -25,6 +25,7 @@ public class levelManagerScript : MonoBehaviour
         }
 
         InitializeLevels();
+       // DontDestroyOnLoad(gameObject);
     }
 
     private void InitializeLevels()
@@ -50,6 +51,7 @@ public class levelManagerScript : MonoBehaviour
         if (CurrentLevel > Levels.Count)
         {
             SceneManager.LoadScene(3);
+            CurrentLevel = 1;
             return;
         }
 

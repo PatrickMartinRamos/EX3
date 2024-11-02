@@ -8,6 +8,23 @@ public class changeLevel : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            GameObject dropbox = GameObject.Find("dropBox");
+            GameObject wind = GameObject.Find("Wind");
+
+            if (dropbox != null)
+            {
+                Destroy(dropbox);
+            }
+            else
+            {
+                Debug.LogWarning("dropbox object not found!");
+            }
+
+            if (wind != null)
+            {
+                Destroy(wind);
+            }
+
             levelManagerScript.Instance.ChangeLevel();
         }
     }

@@ -20,6 +20,8 @@ public class storyTrigger : MonoBehaviour
     private string currentText = "";
     private int charIndex = 0;
     private BoxCollider2D boxCollider;
+    public AudioSource storyAudio;
+    private GameObject audioSource;
 
     private void Start()
     {
@@ -27,6 +29,12 @@ public class storyTrigger : MonoBehaviour
         storyBoxBG.SetActive(false);
         _playerScript = FindAnyObjectByType<playerScript>();
         boxCollider = GetComponent<BoxCollider2D>();
+        audioSource = GameObject.Find("playerAudio");
+        if (audioSource != null)
+        {
+            storyAudio = audioSource.GetComponent<AudioSource>();
+            //todo make audio source for story
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

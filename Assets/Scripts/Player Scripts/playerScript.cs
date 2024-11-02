@@ -144,8 +144,6 @@ public class playerScript : MonoBehaviour
         playerChargeSliderVisual();
         chargeSlider.transform.position = new Vector2(transform.position.x, transform.position.y + 1.5f);
         chargeSlider.transform.position = new Vector2(transform.position.x, transform.position.y + 1.5f);
-
-        trackJet.text = "jetpack thrust " + _jetpackThrustForce;
     }
     #region save player last Pos
     public void setSavePos(Vector3 newSavePoint)
