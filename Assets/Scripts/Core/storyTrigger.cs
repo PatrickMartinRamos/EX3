@@ -105,7 +105,7 @@ public class storyTrigger : MonoBehaviour
 
         storyBoxBG.SetActive(true);
         storyBoxBG.transform.localScale = Vector3.zero; // Start from 0 scale
-        storyBoxBG.transform.DOScale(123.5f, 0.5f).SetEase(Ease.OutBounce); // Scale up with bounce effect
+        storyBoxBG.transform.DOScale(854f, 0.5f).SetEase(Ease.OutBounce); // Scale up with bounce effect
         pressEnterTxt.DOFade(0, 1f).SetLoops(-1, LoopType.Yoyo);
         storyText.text = "";
     }
