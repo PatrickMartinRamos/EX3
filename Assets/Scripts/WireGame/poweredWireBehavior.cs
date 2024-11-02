@@ -8,6 +8,7 @@ public class poweredWireBehavior : MonoBehaviour
     [SerializeField] private  poweredWireStats powerWireS;
     LineRenderer line;
     public GameObject wireHead;
+    public GameObject baseWire;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,8 +20,17 @@ public class poweredWireBehavior : MonoBehaviour
     void Update()
     {
         MoveWire();
-        line.SetPosition(4,new Vector3(wireHead.transform.position.x - .1f, wireHead.transform.position.y - .05f, wireHead.transform.position.z));
+        //Vector3 startPosition = baseWire.transform.position - new Vector3(0f, 0f, -.1f);
+        //line.SetPosition(0, startPosition);
+        //line.SetPosition(1, startPosition);
+        //line.SetPosition(2, startPosition);
+
+        line.SetPosition(0, new Vector3(baseWire.transform.position.x - .4f, baseWire.transform.position.y - .05f, baseWire.transform.position.z));
+        line.SetPosition(1, new Vector3(baseWire.transform.position.x - .1f, baseWire.transform.position.y - .05f, baseWire.transform.position.z));
+        line.SetPosition(2, new Vector3(baseWire.transform.position.x - .1f, baseWire.transform.position.y - .05f, baseWire.transform.position.z));
+
         line.SetPosition(3,new Vector3(wireHead.transform.position.x - .4f, wireHead.transform.position.y - .05f, wireHead.transform.position.z));
+        line.SetPosition(4, new Vector3(wireHead.transform.position.x - .1f, wireHead.transform.position.y - .05f, wireHead.transform.position.z));
     }
 
     private void OnMouseDown()

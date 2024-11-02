@@ -53,8 +53,26 @@ public class storyTrigger : MonoBehaviour
                     StartDialogue();
                     break;
 
+                case "storyTrigger_4":
+                    currentStoryIndex = 3;
+                    boxCollider.enabled = false;
+                    StartDialogue();
+                    break;
+
+                case "storyTrigger_5":
+                    currentStoryIndex = 4;
+                    boxCollider.enabled = false;
+                    StartDialogue();
+                    break;
+
+                case "storyTrigger_6":
+                    currentStoryIndex = 5;
+                    boxCollider.enabled = false;
+                    StartDialogue();
+                    break;
+
                 default:
-                    Debug.Log("No story associated with this trigger.");
+                    Debug.Log("No story associated with this trigger."); 
                     break;
             }
         }

@@ -17,6 +17,11 @@ TagManager:
   - BigBox
   - Trash
   - PressurePlate
+  - storyTrigger_4
+  - storyTrigger_5
+  - hintTrigger_4
+  - hintTrigger_5
+  - storyTrigger_6
   layers:
   - Default
   - TransparentFX
@@ -27,7 +32,7 @@ TagManager:
   - Ground
   - Box
   - Ladder
-  - 
+  - Player
   - 
   - 
   - 

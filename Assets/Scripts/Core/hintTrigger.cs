@@ -49,8 +49,24 @@ public class hintTrigger : MonoBehaviour
                     }
                     break;
 
+                case "hintTrigger_4":
+                    if (hintHandler.hintLines.Count > 3)
+                    {
+                        hintText.text = hintHandler.hintLines[3].hintLine;
+                        ShowHintElements();
+                    }
+                    break;
+
+                case "hintTrigger_5":
+                    if (hintHandler.hintLines.Count > 4)
+                    {
+                        hintText.text = hintHandler.hintLines[4].hintLine;
+                        ShowHintElements();
+                    }
+                    break;
+
                 default:
-                    Debug.Log("No hint associated with this trigger.");
+                    Debug.Log("No hint associated with this trigger."); 
                     break;
             }
         }
