@@ -101,6 +101,7 @@ public class storyTrigger : MonoBehaviour
         timer = 0f;
         currentText = storyHandler.storyElements[currentStoryIndex].storyLines[textIndex].storyText;
         storyText.gameObject.SetActive(true);
+        storyAudio.Play();
 
         storyBoxBG.SetActive(true);
         storyBoxBG.transform.localScale = Vector3.zero; // Start from 0 scale
@@ -119,20 +120,39 @@ public class storyTrigger : MonoBehaviour
             {
                 if (charIndex < currentText.Length)
                 {
+                    if (!storyAudio.isPlaying)
+                    {
+                        // Play audio if it’s not already playing
+                        storyAudio.Play();
+                    }
+
+                    // Show the next character
                     storyText.text += currentText[charIndex];
                     charIndex++;
                     timer = 0f;
                 }
-                else if (Input.GetKeyDown(KeyCode.Return))
+                else
                 {
-                    textIndex++;
-                    DisplayNextStoryElement();
+                    // Stop audio when all characters are displayed
+                    if (storyAudio.isPlaying)
+                    {
+                        storyAudio.Stop();
+                    }
+
+                    // Check for Enter key press to show the next story element
+                    if (Input.GetKeyDown(KeyCode.Return))
+                    {
+                        textIndex++;
+                        DisplayNextStoryElement();
+                    }
                 }
             }
         }
 
-        storyBoxBG.transform.position = new Vector3(cam.transform.position.x + .5f, cam.transform.position.y + -6, 0f);
+        // Position the story box background with the camera
+        storyBoxBG.transform.position = new Vector3(cam.transform.position.x + 0.5f, cam.transform.position.y - 6, 0f);
     }
+
 
     public void activateTriggerColliderOnReset(bool activateTrigger)
     {
@@ -149,6 +169,9 @@ public class storyTrigger : MonoBehaviour
                 timer = 0f;
                 currentText = storyHandler.storyElements[currentStoryIndex].storyLines[textIndex].storyText;
                 storyText.text = "";
+
+                // Restart the audio for the next line
+                storyAudio.Play();
             }
             else
             {
@@ -168,5 +191,6 @@ public class storyTrigger : MonoBehaviour
 
         isDialogueActive = false;
         _playerScript.stopMove(false);
+        storyAudio.Stop();
     }
 }
