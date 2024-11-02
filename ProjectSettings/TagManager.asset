@@ -22,6 +22,7 @@ TagManager:
   - hintTrigger_4
   - hintTrigger_5
   - storyTrigger_6
+  - storyTrigger_7
   layers:
   - Default
   - TransparentFX

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class levelManagerScript : MonoBehaviour
 {
@@ -48,7 +49,7 @@ public class levelManagerScript : MonoBehaviour
 
         if (CurrentLevel > Levels.Count)
         {
-            Debug.LogWarning("No more levels to change to.");
+            SceneManager.LoadScene(3);
             return;
         }
 

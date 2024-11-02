@@ -71,6 +71,12 @@ public class storyTrigger : MonoBehaviour
                     StartDialogue();
                     break;
 
+                case "storyTrigger_7":
+                    currentStoryIndex = 6;
+                    boxCollider.enabled = false;
+                    StartDialogue();
+                    break;
+
                 default:
                     Debug.Log("No story associated with this trigger."); 
                     break;
