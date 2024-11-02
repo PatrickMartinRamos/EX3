@@ -13,10 +13,19 @@ public class computerScript : MonoBehaviour
     [SerializeField] private GameObject showOpenGateTextBoxBG;
     [SerializeField] private TextMeshProUGUI showOpenGateCompText;
 
+    private GameObject audioSource;
+    private AudioSource computerAudio;
+
     private void Start()
     {
         showOpenGateTextBoxBG.SetActive(false);
         showOpenGateCompText.gameObject.SetActive(false);
+
+        audioSource = GameObject.Find("computerAudio");
+        if (audioSource != null)
+        {
+            computerAudio = audioSource.GetComponent<AudioSource>();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -52,6 +61,7 @@ public class computerScript : MonoBehaviour
         if (isPlayerInRange && Input.GetKeyDown(KeyCode.E)) 
         {
             //Debug.Log("Player pressed E to interact with: " + gameObject.name);
+            computerAudio.Play();
             if (onComputerInteract != null)
             {
                 onComputerInteract.Invoke();

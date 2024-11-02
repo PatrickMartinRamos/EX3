@@ -66,14 +66,6 @@ public class playerScript : MonoBehaviour
     private float dashDistanceCovered;
     [SerializeField] private TextMeshProUGUI trackJet;
 
-    //[Header("Camera")]
-    //[SerializeField] private Camera cam;
-    //[SerializeField] private float camXoffset;
-    //[SerializeField] private float camYoffset;
-    //[SerializeField] private float minX = -7f;
-    //[SerializeField] private float maxX = 7f;  
-    //[SerializeField] private float minY = 2f; 
-    //[SerializeField] private float maxY = 3f;
     #region get input
     private void Awake()
     {
@@ -116,6 +108,7 @@ public class playerScript : MonoBehaviour
         _currentvelocity = Vector2.zero;
         lastSavePlayerPos = transform.position;
         Application.targetFrameRate = 60;
+
         if (playerManager.Instance != null)
         {
             _playerChargeStrength = playerManager.Instance.getPlayerChargeStrength();
