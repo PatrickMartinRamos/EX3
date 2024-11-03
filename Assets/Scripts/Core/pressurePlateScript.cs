@@ -26,6 +26,11 @@ public class pressurePlateScript : MonoBehaviour
             onPressurePlateActivate?.Invoke();
             StartCoroutine(DeactivateBoxAfterDelay(collision.gameObject));
         }
+        else if (collision.gameObject.CompareTag("dropBoxlvl2"))
+        {
+            onPressurePlateActivate?.Invoke();
+            StartCoroutine(DeactivateBoxAfterDelay(collision.gameObject));
+        }
     }
 
     private IEnumerator DeactivateBoxAfterDelay(GameObject box)

@@ -46,7 +46,7 @@ public class levelManagerScript : MonoBehaviour
     public void ChangeLevel()
     {
         CurrentLevel++;
-        Debug.Log($"Changed to level {CurrentLevel}");
+        //Debug.Log($"Changed to level {CurrentLevel}");
 
         if (CurrentLevel > Levels.Count)
         {

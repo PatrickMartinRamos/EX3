@@ -25,6 +25,7 @@ TagManager:
   - storyTrigger_7
   - dropBox
   - Wind
+  - dropBoxlvl2
   layers:
   - Default
   - TransparentFX

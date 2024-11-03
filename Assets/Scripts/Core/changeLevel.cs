@@ -9,8 +9,8 @@ public class changeLevel : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             GameObject dropbox = GameObject.Find("dropBox");
-            GameObject wind = GameObject.Find("Wind");
-
+            GameObject wind = GameObject.Find("wind");
+            
             if (dropbox != null)
             {
                 Destroy(dropbox);
