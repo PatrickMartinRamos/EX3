@@ -64,7 +64,7 @@ public class cameraEventScript : MonoBehaviour
     #region Level 3 Cam Events
     public void onGreenGateOpenlvl3()
     {
-        int[] cameraIndices = { 1 };
+        int[] cameraIndices = { 1 ,2 };
         StartCoroutine(ActivateEventCameras(lvl3_VCams, cameraIndices));
     }
     #endregion

@@ -21,16 +21,13 @@ public class mainMenuScript : MonoBehaviour
     public void showControls()
     {
         controls.gameObject.SetActive(true);
-        controls.transform.localScale = Vector3.zero;  // Set initial scale to 0
-        controls.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBounce);
+        //controls.transform.localScale = Vector3.zero;  // Set initial scale to 0
+        //controls.transform.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBounce);
     }
 
     public void hideControls()
     {
-        controls.transform.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBounce).OnComplete(() =>
-        {
-            controls.gameObject.SetActive(false);
-        });
+        controls.gameObject.SetActive(false);
     }
 
     public void quitApp()

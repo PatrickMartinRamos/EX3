@@ -64,7 +64,7 @@ public class playerScript : MonoBehaviour
     private float maxJetpackHeight;  // Maximum height reached by the jetpack
     private Vector2 dashStartPosition;
     private float dashDistanceCovered;
-    [SerializeField] private TextMeshProUGUI trackJet;
+    [SerializeField] private TextMeshProUGUI trackHeight;
 
     #region get input
     private void Awake()
@@ -108,7 +108,7 @@ public class playerScript : MonoBehaviour
         _currentvelocity = Vector2.zero;
         lastSavePlayerPos = transform.position;
         Application.targetFrameRate = 60;
-
+        trackHeight.gameObject.SetActive(false);
         if (playerManager.Instance != null)
         {
             _playerChargeStrength = playerManager.Instance.getPlayerChargeStrength();
@@ -136,7 +136,8 @@ public class playerScript : MonoBehaviour
         //useJetpack();
         playerChargeSliderVisual();
         chargeSlider.transform.position = new Vector2(transform.position.x, transform.position.y + 1.5f);
-        chargeSlider.transform.position = new Vector2(transform.position.x, transform.position.y + 1.5f);
+
+        //chargeSlider.transform.position = new Vector2(transform.position.x, transform.position.y + 1.5f);
     }
     #region save player last Pos
     public void setSavePos(Vector3 newSavePoint)
@@ -275,11 +276,17 @@ public class playerScript : MonoBehaviour
                 jetpackActiveTime += Time.deltaTime;
 
                 // Calculate max height
-                //float mass = rb.mass;
-                //float acceleration = _jetpackThrustForce / mass;
-                //maxJetpackHeight = (0 * jetpackActiveTime) + (0.5f * acceleration * jetpackActiveTime * jetpackActiveTime); // Simplified
-                //Debug.Log("Heigth" + maxJetpackHeight);
-                //Debug.Log("Time " + jetpackActiveTime);
+                float mass = rb.mass;
+                float weight = mass * 9.81f;
+                float netForce = _jetpackThrustForce - weight;
+                float acceleration = netForce / mass;
+                maxJetpackHeight = (0 * jetpackActiveTime) + (0.5f * acceleration * jetpackActiveTime * jetpackActiveTime); // Simplified
+                Debug.Log("Heigth" + maxJetpackHeight);
+                Debug.Log("Time " + jetpackActiveTime);
+                Debug.Log("thurst force " + _jetpackThrustForce);
+
+                trackHeight.gameObject.SetActive(true);
+                trackHeight.text = "Height: " + maxJetpackHeight.ToString("F2");
             }
             else
             {
@@ -292,6 +299,10 @@ public class playerScript : MonoBehaviour
         if (isGrounded && _jetpackFuel < 100) // Refill fuel only when grounded
         {
             _jetpackFuel += _fuelRefileRate * Time.deltaTime;
+        }
+        if(isGrounded)
+        {
+            trackHeight.gameObject.SetActive(false);
         }
 
         _jetpackFuel = Mathf.Clamp(_jetpackFuel, 0, 100);
@@ -306,6 +317,7 @@ public class playerScript : MonoBehaviour
         if (collision.gameObject.layer == groundLayer)
         {
             isGrounded = true;
+            trackHeight.gameObject.SetActive(false);
             // Debug.Log("grounded");
         }
         if (collision.gameObject.layer == boxLayer)
